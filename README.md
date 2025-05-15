@@ -1,0 +1,3 @@
+DJANGO_SECRET_KEY = "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"
+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
+os.getenv("DJANGO_SECRET_KEY")

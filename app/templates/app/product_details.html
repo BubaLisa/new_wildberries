@@ -1,21 +1,19 @@
-from django.shortcuts import render
-from .models import Product
+{% block content %}
 
+<div class="categories">
+    {% for category in categories %}
+    <div class="category">{{ category.name }}</div>
+    {% endfor %}
+</div>
+<div class="product_details">
+    <div class="product-details-image">
+        <img src="{{ product.image.url}}" alt="{{product.name}}">
+    </div>
+    <div class="product-details-info">
+        <h1>{{product.name}}</h1>
+        <p>{{product.description}}</p>
+        <p>{{product.price}}</p>
+    </div>
 
-def index(request):
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "app/index.html", context)
-
-
-def product_details(request, product_id):
-    product = Product.objects.get(id=product_id)
-    categories = []
-    categories.append(product.category)
-    cur_category = product.category
-    while cur_category.parent:
-        categories.append(cur_category.parent)
-        cur_category = cur_category.parent
-    categories.reverse()
-    context = {"product": product, "categories": categories}
-    return render(request, "app/product_details.html", context)
+</div>    
+{% endblock %}

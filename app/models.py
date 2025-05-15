@@ -21,6 +21,7 @@ class Product(models.Model):
         verbose_name="Изображение",
         upload_to="products/",
     )
+
     category = models.ForeignKey(
         "Category",
         verbose_name="Категория",
