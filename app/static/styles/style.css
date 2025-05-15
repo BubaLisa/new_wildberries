@@ -110,3 +110,10 @@ nav .nav-links .nav-link a {
   font-weight: 700;
   color: rgb(195, 22, 234);
 }
+.product-details-image {
+  width: 200;
+  height: 200;
+}
+.product-card {
+  padding: 20px;
+}
