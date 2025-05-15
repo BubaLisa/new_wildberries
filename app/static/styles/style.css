@@ -9,7 +9,7 @@ body {
   padding-top: 100px;
 }
 header {
-  background-color: #e212e5;
+  background-color: #de12e5;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,7 +93,7 @@ nav .nav-links .nav-link a {
 }
 
 .products .product-card .product-button {
-  background-color: #e212e5;
+  background-color: #b812bb;
   color: white;
   border: none;
   border-radius: 10px;
