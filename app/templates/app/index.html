@@ -8,9 +8,9 @@
     {% for product in products %}
         <div class="product-card">
             <img src="{{ product.image.url }}" alt="{{ product.name }}"class="image">
-            <p class="product-price">{{ product.price }} </p>
+            <p class="product-price">{{ product.price }} ₽</p>
             <div class="product-info">
-                <p class="product-brand">{{ product.brand.name }}₽</p>
+                <p class="product-brand">{{ product.brand.name }}</p>
                 /
                 <p class="product-name">{{ product.name }}</p>
             </div>

@@ -2,7 +2,7 @@
 
 <div class="categories">
     {% for category in categories %}
-    <div class="category">{{ category.name }}</div>
+    <span class="category">{{ category.name }}{% if not loop.last %} / {% endif %}</span>
     {% endfor %}
 </div>
 <div class="product_details">
