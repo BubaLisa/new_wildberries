@@ -15,7 +15,9 @@
                 <p class="product-name">{{ product.name }}</p>
             </div>
             <p class="product-category">{{ product.category.name }}</p>
-            <button class="product-button" onclick="window.location.href='{%url 'product_details' product.id %}'">Купить</button>
+            <a href="{% url 'product_details' product.id %}">
+                 <button class="product-button">Купить</button>
+            </a>
         </div>
     
     {% endfor %}

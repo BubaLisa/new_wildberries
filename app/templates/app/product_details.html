@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% block content %}
 
 <div class="categories">
@@ -6,14 +8,19 @@
     {% endfor %}
 </div>
 <div class="product_details">
-    <div class="product-details-image">
+    <div class="item product-details-image">
         <img src="{{ product.image.url}}" alt="{{product.name}}" class="product-details-image">
     </div>
-    <div class="product-details-info">
-        <h1>{{product.name}}</h1>
-        <p>{{product.description}}</p>
-        <p>{{product.price}}</p>
+    <div class="item product-details-info">
+        <h1 class="product-details-name">{{product.name}}</h1>
+        <p class="product-details-name">{{product.desc}}</p>
     </div>
+    <div class="item price-container">
+        <p class="product-details-price">{{product.price}} ₽</p>
+        <button class="price-button">Добавить в корзину</button>
+        <button class="price-button">Купить сейчас</button>
+    </div>
+
 
 </div>    
 {% endblock %}
