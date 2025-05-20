@@ -1,11 +1,21 @@
 from django.db import models
-
+from django.utils.text import slugify
 
 class Product(models.Model):
     name = models.CharField(
         verbose_name="Наименование",
         max_length=200,
     )
+
+    slug = models.SlugField(
+        "URL",
+        unique = True,
+        null= True,
+        blank=True,
+        max_length = 250,
+        editable=True,
+    )
+
     desc = models.TextField(
         verbose_name="Описание",
         max_length=600,
@@ -45,6 +55,15 @@ class Category(models.Model):
         verbose_name="Название",
         max_length=200,
     )
+    slug = models.SlugField(
+        "URL",
+        unique = True,
+        null= True,
+        blank=True,
+        max_length = 250,
+        editable=True,
+    )
+
     parent = models.ForeignKey(
         "self",
         verbose_name="Родительская категория",
@@ -52,6 +71,7 @@ class Category(models.Model):
         null=True,
         blank=True,
     )
+        
     class Meta:
         verbose_name="Категория"
         verbose_name_plural = "Категория"
