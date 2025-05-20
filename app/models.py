@@ -14,7 +14,7 @@ class Product(models.Model):
     price = models.DecimalField(
         verbose_name="Цена",
         max_digits=10,
-        decimal_places=2,
+        decimal_places=0,
     )
 
     image = models.ImageField(

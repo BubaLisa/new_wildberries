@@ -83,6 +83,8 @@ nav .nav-links .nav-link a {
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  margin: 5px 0 5px 0;
+  height: 50px;
 }
 
 .products .product-card .product-name {
@@ -98,6 +100,8 @@ nav .nav-links .nav-link a {
   font-size: 20px;
   font-weight: 900;
   color: black;
+  max-width: 500px;
+  white-space: nowrap;
 }
 
 .products .product-card .product-button {
@@ -123,11 +127,22 @@ nav .nav-links .nav-link a {
   margin: 20px;
 }
 
+.pagination {
+  height: 100px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-
+.pagination a {
+  text-decoration: none;
+  font-weight: bold;
+}
 /* product details style */
 
-.categories{
+.categories {
   height: 60px;
   display: flex;
   flex-wrap: nowrap;
@@ -140,9 +155,9 @@ nav .nav-links .nav-link a {
 }
 
 .product_details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .item {
@@ -156,33 +171,31 @@ nav .nav-links .nav-link a {
 }
 
 .price-container {
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 
 p.product-details-price {
-    margin: 0;
-    font-size: 40px;
-    font-family: helvetica;
-    font-weight: 700;
+  margin: 0;
+  font-size: 40px;
+  font-family: helvetica;
+  font-weight: 700;
 }
 
-
 .price-container button {
-    width: 300px;
-    height: 50px;
-    font-size: 20px;
-    background-color: #a73afd;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  background-color: #a73afd;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
