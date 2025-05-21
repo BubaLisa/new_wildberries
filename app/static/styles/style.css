@@ -83,14 +83,13 @@ nav .nav-links .nav-link a {
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  margin: 5px 0 5px 0;
-  height: 50px;
+  height: 30px;
 }
 
 .products .product-card .product-name {
   font-size: 20px;
   font-weight: 900;
-  color: rgb(85, 85, 85);
+  color: rgb(152, 151, 151);
   overflow: hidden;
   max-width: 300px;
   white-space: nowrap;

@@ -12,9 +12,8 @@
             </a>
             <p class="product-price">{{ product.price }} ₽</p>
             <div class="product-info">
-                <p class="product-brand">{{ product.brand.name }}</p>
-                /
-                <p class="product-name">{{ product.name }}</p>
+                <p class="product-brand">{{ product.brand.name }} /</p>
+                <p class="product-name"> {{ product.name }}</p>
             </div>
             <p class="product-category">{{ product.category.name }}</p>
             <a href="{% url 'basket_add' product.id %}">
@@ -27,16 +26,15 @@
     </div>
 <div class="pagination">
     <div class="page-indicator">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</div>
-
-    {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+    {% if page_obj.number > 1 %}
+        <a href="?page=1">В начало</a>
     {% endif %}
 
     {% for page in pagination_range %}
         {% if page == '...' %}
             <span>...</span>
         {% elif page == page_obj.number %}
-            <span class="current">{{ page }}</span>
+            <span class="current page-num">{{ page }}</span>
         {% else %}
             <a href="?page={{ page }}">{{ page }}</a>
         {% endif %}
