@@ -7,15 +7,6 @@ class Product(models.Model):
         max_length=200,
     )
 
-    slug = models.SlugField(
-        "URL",
-        unique = True,
-        null= True,
-        blank=True,
-        max_length = 250,
-        editable=True,
-    )
-
     desc = models.TextField(
         verbose_name="Описание",
         max_length=600,
@@ -55,14 +46,6 @@ class Category(models.Model):
         verbose_name="Название",
         max_length=200,
     )
-    slug = models.SlugField(
-        "URL",
-        unique = True,
-        null= True,
-        blank=True,
-        max_length = 250,
-        editable=True,
-    )
 
     parent = models.ForeignKey(
         "self",
@@ -98,3 +81,4 @@ class Brand(models.Model):
         verbose_name_plural = "Бренд"
     def __str__(self):
         return self.name    
+    

@@ -17,7 +17,9 @@
     </div>
     <div class="item price-container">
         <p class="product-details-price">{{product.price}} ₽</p>
+        <a href="{% url 'basket_add' product.id %}">
         <button class="price-button">Добавить в корзину</button>
+        </a>
         <button class="price-button">Купить сейчас</button>
     </div>
 

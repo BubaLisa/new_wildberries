@@ -126,8 +126,27 @@ nav .nav-links .nav-link a {
 .product-card {
   margin: 20px;
 }
-
 .pagination {
+  margin: 20px auto;
+  text-align: center;
+  clear: both;
+}
+.pagination a,
+.pagination span {
+  margin: 0 5px;
+  padding: 5px 10px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+}
+.pagination .current {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.page-indicator {
+  font-size: 25px;
+}
+/*.pagination {
   height: 100px;
   font-size: 40px;
   display: flex;

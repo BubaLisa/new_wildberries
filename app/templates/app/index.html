@@ -7,7 +7,9 @@
     <div class="products">
     {% for product in page_obj %}
         <div class="product-card">
+            <a href="{% url 'product_details' product.id %}">
             <img src="{{ product.image.url }}" alt="{{ product.name }}"class="image">
+            </a>
             <p class="product-price">{{ product.price }} ₽</p>
             <div class="product-info">
                 <p class="product-brand">{{ product.brand.name }}</p>
@@ -15,23 +17,33 @@
                 <p class="product-name">{{ product.name }}</p>
             </div>
             <p class="product-category">{{ product.category.name }}</p>
-            <a href="{% url 'product_details' product.id %}">
-                <button class="product-button">Купить</button>
+            <a href="{% url 'basket_add' product.id %}">
+                <button class="product-button">Добавить в корзину</button>
             </a>
         </div>
-    
-    {% endfor %}
-    </div>
-    <div class="pagination">
-        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-
         
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}"> Назад </a>
-        {% endif %}
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Вперёд </a>
-        {% endif %}
+{% endfor %}
     </div>
+<div class="pagination">
+    <div class="page-indicator">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</div>
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+    {% endif %}
+
+    {% for page in pagination_range %}
+        {% if page == '...' %}
+            <span>...</span>
+        {% elif page == page_obj.number %}
+            <span class="current">{{ page }}</span>
+        {% else %}
+            <a href="?page={{ page }}">{{ page }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+    {% endif %}
+</div>
 {% endblock %}
