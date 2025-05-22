@@ -5,7 +5,7 @@ from .models import User
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, label="Email")
     phone_number = forms.CharField(required=False, label="Номер телефона")
-    address = forms.CharField(widget=forms.Textarea, required=False, label="Адрес")
+    address = forms.CharField(widget=forms.TextInput, required=False, label="Адрес")
 
     class Meta:
         model = User

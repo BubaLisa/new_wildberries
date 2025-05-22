@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class Product(models.Model):
     name = models.CharField(
@@ -34,6 +35,14 @@ class Product(models.Model):
         verbose_name="Бренд",
         on_delete=models.CASCADE,
     )
+
+    slug = models.SlugField(
+        "URL",
+        max_length=250,
+        unique=True,
+        null=False,
+        editable=True,
+    )
     class Meta:
         verbose_name="Товар"
         verbose_name_plural = "Товары"
@@ -54,6 +63,14 @@ class Category(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+    )
+
+    slug = models.SlugField(
+        "URL",
+        max_length=250,
+        unique=True,
+        null=False,
+        editable=True,
     )
         
     class Meta:

@@ -4,6 +4,8 @@ from .cart import Cart
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from .forms import CustomUserCreationForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 def index(request):
     product_list = Product.objects.all()
@@ -80,8 +82,20 @@ def registration_page(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login') 
+            user = form.save()
+            login(request, user)
+            return redirect('index') 
     else:
         form = CustomUserCreationForm()
     return render(request, 'app/registration_page.html', {'form': form})
+
+def login_page(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('app/index.html')  # или куда хочешь после логина
+    else:
+        form = AuthenticationForm()
+    return render(request, 'app/login_page.html', {'form': form})
