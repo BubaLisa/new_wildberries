@@ -4,25 +4,28 @@
 
 <div class="categories">
     {% for category in categories %}
-    <span class="category">{{ category.name }}{% if not loop.last %} / {% endif %}</span>
+    <span class="category">{{ category.name }}{% if not forloop.last %} / {% endif %}</span>
     {% endfor %}
 </div>
+
 <div class="product_details">
     <div class="item product-details-image">
-        <img src="{{ product.image.url}}" alt="{{product.name}}" class="product-details-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-details-image">
     </div>
     <div class="item product-details-info">
-        <h1 class="product-details-name">{{product.name}}</h1>
-        <p class="product-details-name">{{product.desc}}</p>
+        <h1 class="product-details-name">{{ product.name }}</h1>
+        <p class="product-details-name">{{ product.desc }}</p>
     </div>
     <div class="item price-container">
-        <p class="product-details-price">{{product.price}} ₽</p>
-        <a href="{% url 'basket_add' product.id %}">
-        <button class="price-button">Добавить в корзину</button>
-        </a>
+        <p class="product-details-price">{{ product.price }} ₽</p>
+
+        <form method="post" action="{% url 'cart_add' product.id %}">
+            {% csrf_token %}
+            <button type="submit" class="price-button">Добавить в корзину</button>
+        </form>
+
         <button class="price-button">Купить сейчас</button>
     </div>
+</div>
 
-
-</div>    
 {% endblock %}

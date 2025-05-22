@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h1>Корзина</h1>
+    {% if cart.cart %}
+        <div class="cart-items">
+            {% for item in cart %}
+            <div class="cart-item">
+                <div class="item-image">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </div>
+                <div class="item-details">
+                    <h2 class="item-name">{{ item.product.name }}</h2>
+                    <p class="item-desc">{{ item.product.desc|default:"Описание отсутствует" }}</p>
+                </div>
+
+                <div class="item-quantity-control">
+                    <form method="post" action="{% url 'cart_update' item.product.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="decrement">
+                        <button type="submit" class="quantity-button">−</button>
+                    </form>
+                    <span class="quantity-number">{{ item.quantity }}</span>
+                    <form method="post" action="{% url 'cart_update' item.product.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="increment">
+                        <button type="submit" class="quantity-button">+</button>
+                    </form>
+                </div>
+
+                <div class="item-total-price">
+                    {{ item.total_price }} ₽
+                </div>
+
+                <div class="item-actions">
+                    <form method="post" action="{% url 'cart_remove' item.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-button">Удалить</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <p>Общая сумма: {{ cart.get_total_price }} ₽</p>
+            <button class="checkout-button">Оформить заказ</button>
+        </div>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+</div>
+{% endblock %}

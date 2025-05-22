@@ -217,3 +217,123 @@ p.product-details-price {
   flex-direction: column;
   justify-content: center;
 }
+
+/* Корзина */
+
+.basket-container {
+
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.basket-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.basket-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    gap: 15px;
+}
+
+.item-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-name {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+}
+
+.item-desc {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.item-quantity,
+.item-price,
+.item-total-price {
+    width: 120px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.item-actions {
+    width: 100px;
+    text-align: center;
+}
+
+.remove-button {
+    background-color: #e74c3c;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: #c0392b;
+}
+
+.basket-summary {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.checkout-button {
+    background-color: #de12e5;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.checkout-button:hover {
+    background-color: #1e8449;
+}
+
+.item-quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+}
+
+.quantity-number {
+    min-width: 20px;
+    text-align: center;
+    font-size: 16px;
+}

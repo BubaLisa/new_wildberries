@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
-from .basket import Basket
+from .cart import Cart  
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
+from .forms import CustomUserCreationForm
 
 def index(request):
     product_list = Product.objects.all()
@@ -12,9 +14,10 @@ def index(request):
 
     pagination_range = get_pagination(page_obj.number, paginator.num_pages)
 
-    context = {"page_obj": page_obj,
-            "pagination_range": pagination_range,
-            }
+    context = {
+        "page_obj": page_obj,
+        "pagination_range": pagination_range,
+    }
     return render(request, "app/index.html", context)
 
 def products_details(request, product_id):
@@ -41,18 +44,44 @@ def get_pagination(current_page, total_pages, delta=2):
             range_pages.append('...')
     return range_pages      
 
-def basket_add(request, product_id):
-    basket = Basket(request)
+def cart_add(request, product_id):
+    cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    basket.add(product=product, quantity=1)
-    return redirect('basket_detail')
+    cart.add(product=product, quantity=1)
+    return redirect('cart_detail')
 
-def basket_remove(request, product_id):
-    basket = Basket(request)
+def cart_remove(request, product_id):
+    cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    basket.remove(product)
-    return redirect('basket_detail')
+    cart.remove(product)
+    return redirect('cart_detail')
 
-def basket_detail(request):
-    basket = Basket(request)
-    return render(request, 'app/basket_detail.html', {'basket': basket})
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, 'app/cart_detail.html', {'cart': cart})
+
+@require_POST
+def cart_update(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    action = request.POST.get("action")
+
+    if action == "increment":
+        cart.add(product=product, quantity=1, update_quantity=False)
+    elif action == "decrement":
+        if cart.cart[str(product_id)]["quantity"] > 1:
+            cart.add(product=product, quantity=-1, update_quantity=False)
+        else:
+            cart.remove(product)
+
+    return redirect("cart_detail")
+
+def registration_page(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login') 
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'app/registration_page.html', {'form': form})
