@@ -10,15 +10,22 @@ class Cart:
             cart = self.session['cart'] = {}
         self.cart = cart
 
-    def add(self, product, quantity=1):
+    def add(self, product, quantity=1, update_quantity=False):
         product_id = str(product.id)
         if product_id in self.cart:
-            self.cart[product_id]['quantity'] += quantity
+            if update_quantity:
+                self.cart[product_id]['quantity'] = quantity
+            else:
+                self.cart[product_id]['quantity'] += quantity
         else:
             self.cart[product_id] = {
                 'quantity': quantity,
                 'price': str(product.price)
             }
+        self.save()
+
+    def clear(self):
+        self.cart = {}  # Очищаем корзину полностью
         self.save()
 
     def save(self):

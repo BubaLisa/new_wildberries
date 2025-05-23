@@ -9,9 +9,11 @@
         <div class="cart-items">
             {% for item in cart %}
             <div class="cart-item">
+                <a href="{% url 'product_details' item.product.id %}">
                 <div class="item-image">
                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                 </div>
+                </a>
                 <div class="item-details">
                     <h2 class="item-name">{{ item.product.name }}</h2>
                     <p class="item-desc">{{ item.product.desc|default:"Описание отсутствует" }}</p>
@@ -46,8 +48,15 @@
         </div>
         <div class="cart-summary">
             <p>Общая сумма: {{ cart.get_total_price }} ₽</p>
-            <button class="checkout-button">Оформить заказ</button>
+            <div class="summary-buttons">
+                <form method="post" action="{% url 'cart_clear' %}">
+                {% csrf_token %}
+                <button type="submit" class="clear-button">Очистить корзину</button>
+                </form>
+                <button class="checkout-button">Оформить заказ</button>
+            </div>
         </div>
+        
     {% else %}
         <p>Ваша корзина пуста.</p>
     {% endif %}

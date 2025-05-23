@@ -52,6 +52,11 @@ def cart_add(request, product_id):
     cart.add(product=product, quantity=1)
     return redirect('cart_detail')
 
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()  # Вызываем метод очистки
+    return redirect('cart_detail')  # Перенаправляем обратно в корзину
+
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -61,6 +66,22 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'app/cart_detail.html', {'cart': cart})
+
+def cart_update(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    action = request.POST.get('action')  # 'increment' или 'decrement'
+
+    if action == 'increment':
+        cart.add(product=product, quantity=1)  # увеличиваем на 1
+    elif action == 'decrement':
+        current_quantity = cart.cart.get(str(product.id), {}).get('quantity', 0)
+        if current_quantity > 1:
+            cart.add(product=product, quantity=-1)  # уменьшаем на 1
+        else:
+            cart.remove(product)  # если 1, то удаляем
+
+    return redirect('cart_detail')
 
 @require_POST
 def cart_update(request, product_id):
