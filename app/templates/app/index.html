@@ -7,7 +7,7 @@
     <div class="products">
     {% for product in page_obj %}
         <div class="product-card">
-            <a href="{% url 'product_details' product.id %}">
+            <a href="{% url 'product_details' slug=product.slug %}">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" class="image">
             </a>
             <p class="product-price">{{ product.price }} ₽</p>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Product, PersistentCartItem
 from .cart import Cart  
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
@@ -26,8 +26,8 @@ def index(request):
     }
     return render(request, "app/index.html", context)
 
-def products_details(request, product_id):
-    product = Product.objects.get(id=product_id)
+def products_details(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     categories = []
     categories.append(product.category)
     cur_category = product.category
@@ -103,11 +103,26 @@ def cart_update(request, product_id):
 
     return redirect("cart_detail")
 
+def restore_cart_from_db(user, request):
+    session_cart = Cart(request)
+    db_items = PersistentCartItem.objects.filter(user=user)
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import RegisterForm  # твоя форма регистрации
-import logging
+    for item in db_items:
+        session_cart.add(product=item.product, quantity=item.quantity, update_quantity=False)
+
+def save_cart_to_db(user, request):
+    session_cart = Cart(request)
+
+    for item in session_cart:
+        PersistentCartItem.objects.update_or_create(
+            user=user,
+            product=item['product'],
+            defaults={'quantity': item['quantity']}
+        )
+
+
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -117,6 +132,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            restore_cart_from_db(user, request)
             return redirect("index")  # или куда хочешь после регистрации
         else:
             # Логируем ошибки для дебага
@@ -132,13 +148,14 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, f"Добро пожаловать, {user.username}!")
+            restore_cart_from_db(user, request)
             return redirect('index')
     else:
         form = LoginForm()
     return render(request, 'app/login.html', {'form': form})
 
 def logout_view(request):
+    if request.user.is_authenticated:
+        save_cart_to_db(request.user, request)
     logout(request)
-    messages.info(request, "Вы вышли из системы.")
     return redirect('index')

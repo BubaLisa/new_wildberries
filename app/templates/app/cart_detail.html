@@ -9,7 +9,7 @@
         <div class="cart-items">
             {% for item in cart %}
             <div class="cart-item">
-                <a href="{% url 'product_details' item.product.id %}">
+                <a href="{% url 'product_details' slug=item.product.slug %}">
                 <div class="item-image">
                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                 </div>
