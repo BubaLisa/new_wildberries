@@ -3,9 +3,13 @@ from .models import Product
 from .cart import Cart  
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
-from .forms import CustomUserCreationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import RegisterForm, LoginForm
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
+import logging
+
+
 
 def index(request):
     product_list = Product.objects.all()
@@ -99,24 +103,42 @@ def cart_update(request, product_id):
 
     return redirect("cart_detail")
 
-def registration_page(request):
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import RegisterForm  # твоя форма регистрации
+import logging
+
+logger = logging.getLogger(__name__)
+
+def register_view(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index') 
+            return redirect("index")  # или куда хочешь после регистрации
+        else:
+            # Логируем ошибки для дебага
+            logger.warning(f"Ошибка регистрации: {form.errors}")
     else:
-        form = CustomUserCreationForm()
-    return render(request, 'app/registration_page.html', {'form': form})
+        form = RegisterForm()
+    return render(request, "app/register.html", {"form": form})
 
-def login_page(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('app/index.html')  # или куда хочешь после логина
+            messages.success(request, f"Добро пожаловать, {user.username}!")
+            return redirect('index')
     else:
-        form = AuthenticationForm()
-    return render(request, 'app/login_page.html', {'form': form})
+        form = LoginForm()
+    return render(request, 'app/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, "Вы вышли из системы.")
+    return redirect('index')

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -9,8 +10,10 @@ urlpatterns = [
     path("cart/add/<int:product_id>/", views.cart_add, name="cart_add"),
     path("cart/remove/<int:product_id>/", views.cart_remove, name="cart_remove"),
     path("cart/update/<int:product_id>/", views.cart_update, name="cart_update"),
-    path('registration/', views.registration_page, name='registration_page'),
-    path('login/', views.login_page, name='login_page'),
     path('cart/clear/', views.cart_clear, name='cart_clear'),
+
+    path("register/", views.register_view, name="register"),
+    path("login/", views.login_view, name="login"),  # добавляем вход
+    path("logout/", LogoutView.as_view(next_page='index'), name="logout"),
 ]
 

@@ -30,6 +30,28 @@ nav .nav-links {
   gap: 20px;
 }
 
+.nav-profile{
+      color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.nav-link-button {
+  all: unset; /* сброс всех стилей кнопки */
+  color: white;
+  font-size: 30px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-link-button:hover {
+  text-decoration: underline;
+}
+
 nav .nav-links .nav-link a {
   color: white;
   text-decoration: none;

@@ -7,11 +7,22 @@
     </div>
     <nav>
         <div class="nav-links">
-            <div class="nav-link"><a href="{% url 'login_page' %}">Вход</a></div>
-            <div class="nav-link"><a href="{% url 'registration_page' %}">Регистрация</a></div>
-            <div class="nav-link"><a href="#">Каталог</a></div>
+            {% if user.is_authenticated %}
+                <div class="nav-link"><a href="#">Профиль</a></div>
+                <div class="nav-link">
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link-button">Выйти</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="nav-link"><a href="{% url 'register' %}">Регистрация</a></div>
+                <div class="nav-link"><a href="{% url 'login' %}">Вход</a></div>
+            {% endif %}
+            <div class="nav-link"><a href="{% url 'cart_detail' %}">Корзина</a></div>
+            <!--<div class="nav-link"><a href="#">Каталог</a></div>
             <div class="nav-link"><a href="#">О нас</a></div>
-            <div class="nav-link"><a href="#">Контакты</a></div>
+            <div class="nav-link"><a href="#">Контакты</a></div-->>
         </div>
     </nav>
 </header>
